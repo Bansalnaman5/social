@@ -10,7 +10,8 @@ app.set('layout extractStyles',true);
 app.set('layout extrcatScripts',true);
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('static'));
-app.use('/',require('./routes/index'))
+app.use('/',require('./routes/index'));
+app.use('/users',require('./routes/users'));
 app.set('view engine','ejs');
 app.set('views','./views');
 
