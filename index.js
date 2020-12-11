@@ -1,5 +1,6 @@
 const { urlencoded } = require('express');
 const express=require('express');
+const cookieparser=require('cookie-parser');
 const app=express();
 const port=8000;
 const db=require('./config/mongoose');
@@ -9,6 +10,7 @@ app.use(expresslayouts);
 app.set('layout extractStyles',true);
 app.set('layout extrcatScripts',true);
 app.use(express.urlencoded({extended:true}));
+app.use(cookieparser());
 app.use(express.static('static'));
 app.use('/',require('./routes/index'));
 app.use('/users',require('./routes/users'));
