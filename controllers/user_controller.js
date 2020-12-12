@@ -2,11 +2,19 @@ const user=require('..//models/user');
 const { use } = require('../routes');
 
 module.exports.signup=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
+
     return res.render('user_signup',{
         title:"Social | Sign_Up"
     });
 };
 module.exports.signin=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_signin',{
         title:"Social | Sign_In"
     });
@@ -37,4 +45,9 @@ module.exports.create=function(req,res){
 }
 module.exports.createSession=function(req,res){
     return res.redirect('/');
+}
+
+module.exports.signoutfunc=function(req,res){
+    req.logout();
+    return res.redirect('/users/profile');
 }

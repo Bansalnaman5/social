@@ -9,6 +9,9 @@ app.use(expresslayouts);
 const passport=require('passport');
 const session=require('express-session');
 const passportLocal=require('./config/passport_local_stratergy');
+const mongostore=require('connect-mongo')(session);
+const { setAuthenticatedUser } = require('./config/passport_local_stratergy');
+const { MongoStore } = require('connect-mongo');
 // extract styes and scripts from subpages
 app.set('layout extractStyles',true);
 app.set('layout extrcatScripts',true);
@@ -28,12 +31,20 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge:(1000*60*10)
-    }
+    },
+    store:new mongostore(
+    {
+        mongooseConnection:db,
+        autoRemove:'disabled'
+    },function(err){
+        console.log(err || 'connected to mogo store successfully!!');
+    })
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/',require('./routes/'));
+app.use(passport.setAuthenticatedUser);
+app.use('/',require('./routes'));
 app.use('/users',require('./routes/users'));
 
 
