@@ -13,6 +13,7 @@ module.exports.signup=function(req,res){
 };
 module.exports.signin=function(req,res){
     if(req.isAuthenticated()){
+        console.log("log in");
         return res.redirect('/users/profile');
     }
     return res.render('user_signin',{
@@ -44,7 +45,7 @@ module.exports.create=function(req,res){
 
 }
 module.exports.createSession=function(req,res){
-    return res.redirect('/');
+    return res.redirect('/users/profile');
 }
 
 module.exports.signoutfunc=function(req,res){

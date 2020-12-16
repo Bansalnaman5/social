@@ -10,9 +10,18 @@ const passport=require('passport');
 const session=require('express-session');
 const passportLocal=require('./config/passport_local_stratergy');
 const mongostore=require('connect-mongo')(session);
+const sassmiddleware=require('node-sass-middleware');
+
 const { setAuthenticatedUser } = require('./config/passport_local_stratergy');
 const { MongoStore } = require('connect-mongo');
 // extract styes and scripts from subpages
+app.use(sassmiddleware({
+    src:'./static/scss',
+    dest:'./static/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}));
 app.set('layout extractStyles',true);
 app.set('layout extrcatScripts',true);
 app.use(express.urlencoded({extended:true}));

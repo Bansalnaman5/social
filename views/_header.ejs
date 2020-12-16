@@ -1,10 +1,12 @@
-<header>
-
-
+<header >
+<div>
+    <h3 style="color: brown;">Social App</h3>
+</div>
+<div>
     <ul>
         <% if (locals.user) {%>
-            <li><%= user.name%></li>
-            <li><%=user.email%></li>
+            <!-- <li><%= user.name%></li>
+            <li><%=user.email%></li> -->
             <li>  <a href="/users/signout"> Sign Out</a> </li>
 
 
@@ -13,6 +15,6 @@
          <li><a href="/users/signup">Sign Up</a></li>
         <%}%>
     </ul>
-
+</div>
 
 </header>
