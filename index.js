@@ -55,6 +55,7 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 app.use('/',require('./routes'));
 app.use('/users',require('./routes/users'));
+app.use('/post',require('./routes/post'));
 
 
 app.listen(port,function(err){

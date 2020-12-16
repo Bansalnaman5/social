@@ -1,5 +1,13 @@
 
 
-    <h1>SOCIAL MEDIA APP HAI YEH APNI</h1>
-    <p><%=user.name%></p>
-    <p><%=user.email%></p>
+<h1>SOCIAL MEDIA APP HAI YEH APNI</h1>
+<p><%=user.name%></p>
+<p><%=user.email%></p>
+
+<section  id='post'>
+    <h4>Posts</h4>
+    <form action="/post/create-post" class='new_post_via_form' method="post">
+        <textarea name="content" placeholder="Type Here" cols="30" rows="3"></textarea>
+        <input type="submit" value="POST">
+    </form>
+</section>
