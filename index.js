@@ -56,6 +56,7 @@ app.use(passport.setAuthenticatedUser);
 app.use('/',require('./routes'));
 app.use('/users',require('./routes/users'));
 app.use('/post',require('./routes/post'));
+app.use('/comments',require('./routes/comments'))
 
 
 app.listen(port,function(err){

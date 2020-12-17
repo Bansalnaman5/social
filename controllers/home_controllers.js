@@ -1,6 +1,7 @@
 const post=require('../models/post');
-const user=require('../models/user');
-
+const User=require('../models/user');
+const comments=require('../models/comments');
+const { model } = require('../models/comments');
 module.exports.base=function(req,res){
     // post.find({},function(err,posts){
     //     if(err){
@@ -25,7 +26,16 @@ module.exports.base=function(req,res){
     //     });
     // });
 
-    post.find({}).populate('user').exec(function(err,posts){
+    post.find({})
+    .populate('User')
+    .populate({
+        path:'comment'
+        // populate:{
+        //     path:'user'
+        // }
+
+    })
+    .exec(function(err,posts){
         if(err){
             console.log("error fetching posts!!Chal side ho");
             return;
@@ -48,13 +58,23 @@ module.exports.prof=function(req,res){
     //         posts:posts
     //     });
     // });
-    post.find({}).populate('user').exec(function(err,posts){
+    post.find({}).populate('user')
+    .populate({
+        path:'comment',
+        populate:{
+            path:'user',
+            model:'User'
+        }
+
+    })
+    .exec(function(err,posts){
         if(err){
+            console.log(err);
             console.log("error fetching posts!!Chal side ho");
             return;
         }
         
-        return res.render('intro',{
+        return res.render('home',{
             posts:posts
         });
     });
