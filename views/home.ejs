@@ -1,33 +1,36 @@
+<link rel="stylesheet" href="/css/home.css">
 
-
-<h1>SOCIAL MEDIA APP HAI YEH APNI</h1>
+<!-- <h1>SOCIAL MEDIA APP HAI YEH APNI</h1>
 <p><%=user.name%></p>
-<p><%=user.email%></p>
+<p><%=user.email%></p> -->
 
-<section  id='post'>
-    <h4>Posts</h4>
-    <form action="/post/create-post" class='new_post_via_form' method="post">
-        <textarea name="content" placeholder="Type Here" cols="30" rows="3"></textarea>
-        <input type="submit" value="POST">
-    </form>
-
-    <div class="post-list-container">
-        <ul>
-            
-            <%  for(post of posts) {%>
-               <%- include('_post') -%>                
+<div id='master-home'>
+    <section  id='post'>
+        <h4>Posts</h4>
+        <form action="/post/create-post" class='new_post_via_form' method="post">
+            <textarea name="content" placeholder="Type Here" cols="30" rows="3"></textarea>
+            <input type="submit" value="POST">
+        </form>
+    
+        <div class="post-list-container">
+            <ul>
+                
+                <%  for(post of posts) {%>
+                   <%- include('_post') -%>                
+                    <%}%>
+            </ul>
+        </div>
+    </section>
+    
+    <section id='user-friends'>
+        <h4>Friend</h4>
+    
+        <% for(u of allusers){ %>
+            <p>
+                <a href="/users/userprofile/<%=u.id%>"><%=u.name%></a>
+            </p>
                 <%}%>
-        </ul>
-    </div>
-</section>
+    
+    </section>
+</div>
 
-<section id='user-friends'>
-    <h4>Friend</h4>
-
-    <% for(u of allusers){ %>
-        <p>
-            <a href="/users/userprofile/<%=u.id%>"><%=u.name%></a>
-        </p>
-            <%}%>
-
-</section>

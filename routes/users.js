@@ -7,7 +7,7 @@ router.get('/profile', passport.checkAuthentication,a.prof);
 router.get('/userprofile/:id',passport.checkAuthentication,userController.userprofile)
 router.get('/signin',userController.signin);
 router.get('/signup',userController.signup);
-
+router.post('/userupdate/:id',passport.checkAuthentication,userController.userupdate);
 router.post('/create',userController.create);
 
 router.post('/create-session', passport.authenticate(

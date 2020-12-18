@@ -60,3 +60,13 @@ module.exports.userprofile=function(req,res){
         });
     });
 }
+
+module.exports.userupdate=function(req,res){
+    if(req.user.id=req.params.id){
+        user.findByIdAndUpdate(req.params.id,req.body,function(err,us){
+            return res.redirect('back');
+        });
+    }else{
+        return res.status(401).send("Jyada bakaiti mat karo. Kuut denge yahin par");
+    }
+};
