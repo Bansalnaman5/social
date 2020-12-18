@@ -52,3 +52,11 @@ module.exports.signoutfunc=function(req,res){
     req.logout();
     return res.redirect('/users/profile');
 }
+
+module.exports.userprofile=function(req,res){
+    user.findById(req.params.id,function(err,u){
+        return res.render('user_profile',{
+            u:u
+        });
+    });
+}

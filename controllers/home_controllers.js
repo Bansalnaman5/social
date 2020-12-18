@@ -73,9 +73,14 @@ module.exports.prof=function(req,res){
             console.log("error fetching posts!!Chal side ho");
             return;
         }
-        
-        return res.render('home',{
-            posts:posts
+
+        User.find({},function(err,allusers){
+            return res.render('home',{
+                posts:posts,
+                allusers:allusers
+            });
         });
+        
+        
     });
 }
