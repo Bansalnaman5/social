@@ -20,3 +20,22 @@ module.exports.create_comments=function(req,res){
     };
 });
 };
+
+module.exports.destroy=function(req,res){
+    comment.findById(req.params.id,function(err,comment){
+        post.findById(comment.post,function(err,p){
+            if((comment.user==req.user.id) || (req.user.id==p.user)){
+                let pid=comment.post;
+                comment.remove();
+                post.findByIdAndUpdate(pid,{$pull:{comment:req.params.id}},function(err,posts){
+                    return res.redirect('back');
+                });
+            }
+            else{
+                return res.redirect('back');
+            }
+
+        });
+        
+    });
+}

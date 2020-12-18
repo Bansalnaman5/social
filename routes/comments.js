@@ -4,5 +4,6 @@ const passport=require('passport');
 const router=express.Router();
 
 router.post('/create-comment',passport.checkAuthentication,comments_controller.create_comments);
+router.get('/destroy/:id',passport.checkAuthentication,comments_controller.destroy)
 
 module.exports=router;
