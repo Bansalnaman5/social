@@ -11,6 +11,9 @@ const session=require('express-session');
 const passportLocal=require('./config/passport_local_stratergy');
 const mongostore=require('connect-mongo')(session);
 const sassmiddleware=require('node-sass-middleware');
+const flash=require('connect-flash');
+const customfalshm=require('./config/flashmiddle');
+
 
 const { setAuthenticatedUser } = require('./config/passport_local_stratergy');
 const { MongoStore } = require('connect-mongo');
@@ -53,6 +56,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customfalshm.setFlash);
+
 app.use('/',require('./routes'));
 app.use('/users',require('./routes/users'));
 app.use('/post',require('./routes/post'));

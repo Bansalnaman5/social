@@ -45,12 +45,14 @@ module.exports.create=function(req,res){
 
 }
 module.exports.createSession=function(req,res){
+    req.flash('success','Logged In!!');
     return res.redirect('/users/profile');
 }
 
 module.exports.signoutfunc=function(req,res){
     req.logout();
-    return res.redirect('/users/profile');
+    req.flash('success','Logged out!!');    
+    return res.redirect('/users/signin');
 }
 
 module.exports.userprofile=function(req,res){
