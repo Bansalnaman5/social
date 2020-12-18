@@ -2,12 +2,14 @@ header {
   background-color: beige;
   height: auto;
   width: auto;
+  align-self: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-left: 1rem;
-  padding-right: 1rem;
-  margin: -1%; }
+  padding-right: 1rem; }
   header ul li {
     display: inline-block;
     margin-right: 1rem; }
+    header ul li a {
+      text-decoration: none; }

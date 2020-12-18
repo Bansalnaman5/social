@@ -48,7 +48,7 @@ module.exports.base=function(req,res){
     
 };
 
-module.exports.prof=function(req,res){
+module.exports.prof=async function(req,res){
     // post.find({},function(err,posts){
     //     if(err){
     //         console.log("error fetching posts!!Chal side ho");
@@ -58,29 +58,28 @@ module.exports.prof=function(req,res){
     //         posts:posts
     //     });
     // });
-    post.find({}).populate('user')
-    .populate({
-        path:'comment',
-        populate:{
-            path:'user',
-            model:'User'
-        }
-
-    })
-    .exec(function(err,posts){
-        if(err){
-            console.log(err);
-            console.log("error fetching posts!!Chal side ho");
-            return;
-        }
-
-        User.find({},function(err,allusers){
-            return res.render('home',{
-                posts:posts,
-                allusers:allusers
-            });
+    // .exec(function(err,posts){
+    //     if(err){
+    //         console.log(err);
+    //         console.log("error fetching posts!!Chal side ho");
+    //         return;
+    //     }
+    try{
+        let posts= await post.find({}).populate('user')
+        .populate({
+            path:'comment',
+            populate:{
+                path:'user',
+                model:'User'
+            }
+            
         });
-        
-        
-    });
-}
+        let allusers= await User.find({});
+        return res.render('home',{posts:posts,allusers:allusers});
+    }
+    catch(err){
+        console.log('error agaya chal side ho!!');
+        return;
+    }
+           
+};
