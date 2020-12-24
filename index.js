@@ -9,6 +9,7 @@ app.use(expresslayouts);
 const passport=require('passport');
 const session=require('express-session');
 const passportLocal=require('./config/passport_local_stratergy');
+const passportjwt=require('./config/passport-jwt-strategy');
 const mongostore=require('connect-mongo')(session);
 const sassmiddleware=require('node-sass-middleware');
 const flash=require('connect-flash');
