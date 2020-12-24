@@ -26,7 +26,7 @@ app.use(sassmiddleware({
     prefix:'/css'
 }));
 app.set('layout extractStyles',true);
-app.set('layout extrcatScripts',true);
+app.set('layout extractScripts',true);
 app.use(express.urlencoded({extended:true}));
 app.use(cookieparser());
 app.use(express.static('static'));
@@ -42,14 +42,14 @@ app.use(session({
     saveUninitialized:false,
     resave:false,
     cookie:{
-        maxAge:(1000*60*10)
+        maxAge:(1000*60*100)
     },
     store:new mongostore(
     {
         mongooseConnection:db,
         autoRemove:'disabled'
     },function(err){
-        console.log(err || 'connected to mogo store successfully!!');
+        console.log(err || 'connected to mongo store successfully!!');
     })
 }));
 
@@ -59,7 +59,7 @@ app.use(passport.setAuthenticatedUser);
 
 app.use(flash());
 app.use(customfalshm.setFlash);
-
+app.use('/uploads',express.static(__dirname+'/uploads'));
 app.use('/',require('./routes'));
 app.use('/users',require('./routes/users'));
 app.use('/post',require('./routes/post'));

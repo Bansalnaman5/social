@@ -1,41 +1,59 @@
 const comment=require('../models/comments');
 const post=require('../models/post');
 
-module.exports.create_comments=function(req,res){
-    post.findById(req.body.post,function(err,posts){
+module.exports.create_comments=async function(req,res){
+    let posts=await post.findById(req.body.post);
         if(posts){
-        comment.create({
+    let comments=await comment.create({
             content:req.body.content,
             post:req.body.post,
-            user:req.user._id
-        },function(err,comments){
-            if(err){
-            console.log("apni aukat men raho suar!!");
-            return;
-            }
-            posts.comment.push(comments);
-            posts.save();
-            res.redirect('/users/profile')
+            user:req.user._id });
+    posts.comment.push(comments);
+    posts.save();
+    if(req.xhr){
+        c=await comment.populate('user','name').execpopulate();
+        return res.status(200).json({
+            data:{
+                comment:c
+            },
+            message:'Comment created'
         });
-    };
-});
-};
 
-module.exports.destroy=function(req,res){
-    comment.findById(req.params.id,function(err,comment){
-        post.findById(comment.post,function(err,p){
-            if((comment.user==req.user.id) || (req.user.id==p.user)){
-                let pid=comment.post;
-                comment.remove();
-                post.findByIdAndUpdate(pid,{$pull:{comment:req.params.id}},function(err,posts){
-                    return res.redirect('back');
+    }
+    res.redirect('/users/profile')
+       
+
+};
+}
+
+module.exports.destroy= async function(req,res){
+    try{
+
+        let coment=await comment.findById(req.params.id);
+        let p=await post.findById(coment.post);
+        if((coment.user==req.user.id) || (req.user.id==p.user)){
+            let pid=coment.post;
+            coment.remove();
+            let posts=await post.findByIdAndUpdate(pid,{$pull:{comment:req.params.id}});
+            if(req.xhr){
+                return res.status(200).json({
+                    data:{
+                        comment_id:req.params.id
+                    },
+                    message:"comment deleted"
                 });
             }
-            else{
-                return res.redirect('back');
-            }
-
-        });
-        
-    });
+            req.flash("success",'comment deleted');
+            
+            return res.redirect('back');
+        }
+        else{
+            req.flash('error','chal hat!!');
+            return res.redirect('back');
+        }      
+    }
+    catch(err){
+        console.log("error in commment destruction!!");
+        return;
+    }
 }

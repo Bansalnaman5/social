@@ -65,7 +65,7 @@ module.exports.prof=async function(req,res){
     //         return;
     //     }
     try{
-        let posts= await post.find({}).populate('user')
+        let posts= await post.find({}).sort('-createdAt').populate('user')
         .populate({
             path:'comment',
             populate:{
