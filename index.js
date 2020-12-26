@@ -7,6 +7,7 @@ const db=require('./config/mongoose');
 const expresslayouts=require('express-ejs-layouts');
 app.use(expresslayouts);
 const passport=require('passport');
+const googlePassport=require('./config/passport-google-oauth2-strategy');
 const session=require('express-session');
 const passportLocal=require('./config/passport_local_stratergy');
 const passportjwt=require('./config/passport-jwt-strategy');
