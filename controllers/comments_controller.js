@@ -1,29 +1,39 @@
 const comment=require('../models/comments');
 const post=require('../models/post');
+const user=require('../models/user');
+const commentsmailer=require('../mailers/comments_mailer');
 
 module.exports.create_comments=async function(req,res){
-    let posts=await post.findById(req.body.post);
+    try{
+
+        let posts=await post.findById(req.body.post);
         if(posts){
-    let comments=await comment.create({
+            let comments=await comment.create({
             content:req.body.content,
             post:req.body.post,
             user:req.user._id });
-    posts.comment.push(comments);
-    posts.save();
-    if(req.xhr){
-        c=await comment.populate('user','name').execpopulate();
-        return res.status(200).json({
-            data:{
-                comment:c
-            },
-            message:'Comment created'
-        });
-
+            posts.comment.push(comments);
+            posts.save();
+            c=await comments.populate({path:'user',model:user,select:{'password':0}}).execPopulate();
+            commentsmailer.newComment(c);
+            if(req.xhr){
+                
+                return res.status(200).json({
+                    data:{
+                        comment:c
+                    },
+                    message:'Comment created'
+                });
+                
+            }
+            res.redirect('/users/profile')
+            
+            
+        };
     }
-    res.redirect('/users/profile')
-       
-
-};
+    catch(err){
+        console.log("error aoccured",err);
+    }
 }
 
 module.exports.destroy= async function(req,res){
