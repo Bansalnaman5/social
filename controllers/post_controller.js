@@ -1,5 +1,6 @@
 const post=require('../models/post')
 const comments=require('../models/comments');
+const Like=require('../models/like');
 
 module.exports.create_post=async function(req,res){
     try{
@@ -8,6 +9,7 @@ module.exports.create_post=async function(req,res){
             user:req.user._id
         });        
         if(req.xhr){
+            posts=await posts.populate('user','name').execPopulate();
             return res.status(200).json(
                 {
                     data:
@@ -33,6 +35,8 @@ module.exports.destroy=async function(req,res){
         let posts=await post.findById(req.params.id);
         // .id means string of _id
         if(posts.user==req.user.id){
+            await Like.deleteMany({likeable:posts,onModel:'Post'});
+            await Like.deleteMany({_id:{$in:posts.comments}});
             posts.remove();
             await comments.deleteMany({post:req.params.id});
 

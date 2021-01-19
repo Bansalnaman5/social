@@ -66,6 +66,7 @@ app.use('/',require('./routes'));
 app.use('/users',require('./routes/users'));
 app.use('/post',require('./routes/post'));
 app.use('/comments',require('./routes/comments'))
+app.use('/likes',require('./routes/likes'));
 
 
 app.listen(port,function(err){

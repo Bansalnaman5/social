@@ -1,5 +1,7 @@
 #master-home {
   display: flex; }
+  #master-home a {
+    text-decoration: none; }
   #master-home #post {
     width: 70%;
     padding: 10px;

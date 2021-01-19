@@ -8,10 +8,20 @@
         <%= post.content %>
         <br>
         <%= post.user.name %>
+        <br>
+        <small>
+            <%if (locals.user){%>
+                <a class='like-button' data-likes="<%=post.likes.length%>" href="/likes/toggle?id=<%=post._id%>&type=Post">
+                    <%=post.likes.length%> Likes
+                </a>
+                <%}else{%>
+                    <%=post.likes.length%>
+                    <%}%>
+        </small>
     </p>      
-    <div class="post-<%=post._id%>-comment-container">
+    <div class="post-comment">
         <% if(locals.user) { %>
-            <form action="/comments/create-comment" method="post">
+            <form id="post-<%=post._id%>-comment-container" action="/comments/create-comment" method="post">
                 <input type="text" name="content" placeholder="Type comment">
                 <input type="hidden" name='post' value="<%=post._id%>">
                 <input type="submit" value="Add comment">

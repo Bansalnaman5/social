@@ -12,7 +12,7 @@
             <input type="submit" value="POST">
         </form>
     
-        <div class="post-list-container" id='post-list-container'>
+        <div  id='post-list-container'>
             <ul>
                 
                 <%  for(post of posts) {%>
@@ -33,5 +33,12 @@
     
     </section>
 </div>
-
+<script src="/js/post_comment.js"></script>
 <script src="/js/home_post.js"></script>
+<script src="/js/post_comment_likes.js"></script>
+<script>
+    $('.like-button').each(function(){
+        let self=this;
+        let togglecontroler=new handellikes(self);
+    });
+</script>

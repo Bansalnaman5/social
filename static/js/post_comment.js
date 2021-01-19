@@ -1,4 +1,4 @@
-class commentsonpost{
+class Commentsonpost{
     constructor(postid){
         this.postid=postid;
         this.postcontainer=$(`#post-${postid}`);
@@ -17,11 +17,12 @@ class commentsonpost{
             $.ajax({
                 type:'post',
                 url:'/comments/create-comment',
-                data:$(this).serialize(),
+                data:$(self).serialize(),
                 success:function(data){
                     let newComment=pself.newcommentdom(data.data.comment);
                     $(`#post-commentsof-${postid}`).prepend(newComment);
-                    pself.deletecomment($(' .delete-comment-button',newComment));
+                    new handellikes($(' .like-button',newComment));
+                    pself.deletecomment($(' .delete-comment-button', newComment));
 
                     new Noty({
                         theme:'relax',
@@ -41,13 +42,20 @@ class commentsonpost{
         return $(`<li id="comment-${comment._id}">  
         <p>         
             <small>
-                <a class='delete-comment-button' href="/comments/destroy/${comments._id}">X</a>
+                <a class='delete-comment-button' href="/comments/destroy/${comment._id}">X</a>
             </small>
-        ${comments.content}
+        ${comment.content}
         <br>
-        ${comments.user.name} 
+        ${comment.user.name} 
+        <small>
+          
+                <a class='like-button' data-likes="0" href="/likes/toggle?id=${comment._id}&type=Comment">
+                    0 Likes
+                </a>
+                
+        </small>
         </p>
-    </li>`)
+    </li>`);
     }
     deletecomment(deletLink){
         $(deletLink).click(function(e){

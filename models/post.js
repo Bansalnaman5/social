@@ -16,6 +16,12 @@ const postschema=new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'comments'
         }
+    ],
+    likes:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Like'
+        }
     ]
     
 },{

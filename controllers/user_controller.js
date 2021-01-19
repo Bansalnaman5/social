@@ -28,13 +28,13 @@ module.exports.create=function(req,res){
     if(req.body.password!=req.body.password1){
         return res.redirect('back');
     }
-    user.findOne({email:req.body.email},function(err,us){
+    User.findOne({email:req.body.email},function(err,us){
         if(err){
             console.log('user already exists');
             return;
         }
         if(!us){
-            user.create(req.body,function(err,us){
+            User.create(req.body,function(err,us){
                 if(err){
                     console.log('error in creating user');
                     return

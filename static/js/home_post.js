@@ -13,6 +13,8 @@
                     let newPost=newPostDom(data.data.posts);
                     $('#post-list-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button',newPost));
+                    new Commentsonpost(data.data.posts._id)
+                    new handellikes($('.like-button',newPost));
                 },
                 error: function(err){
                     console.log(err.responseText);
@@ -20,7 +22,7 @@
             });
         });
     }
-    // methhod to create post in dom
+    // method to create post in dom
 
     let newPostDom=function(post){
         return $(`<li id="post-${post._id}">
@@ -32,6 +34,13 @@
                         ${post.content}
                         <br>
                         ${post.user.name}
+                        <br>
+                        <small>
+                                <a class='like-button' data-likes="0" href="/likes/toggle?id=${post._id}&type=Post">
+                                    0 Likes
+                                </a>
+                                
+                        </small>
                     </p>      
                     <div class="post-comment-container">
                        
@@ -58,7 +67,7 @@
                     type:'get',
                     url:$(deleteLink).prop('href'),//to get the value of href
                     success:function(data){
-                        $(`#post-${post.post_id}`).remove();
+                        $(`#post-${data.data.post_id}`).remove();
                         new Noty({
                             theme: 'relax',
                             text: "Post Deleted",
@@ -76,12 +85,12 @@
         }
 
         let convertpostajax=function(){
-            $('post-list-container>ul>li').each(function(){
+            $('#post-list-container>ul>li').each(function(){
                 let self=$(this);
                 let deletbutton=$(' .delete-post-button',self);
                 deletePost(deletbutton);
-                let a=self.prop('id').split("-")[1]
-                new commentsonpost(a);
+                let postid=self.prop('id').split("-")[1];
+                new Commentsonpost(postid);
             });
         }
 
