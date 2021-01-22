@@ -19,6 +19,11 @@ const customfalshm=require('./config/flashmiddle');
 
 const { setAuthenticatedUser } = require('./config/passport_local_stratergy');
 const { MongoStore } = require('connect-mongo');
+const chatServer=require('http').Server(app);
+const chatSockets=require('./config/chat_socket').chatSockets(chatServer);
+chatServer.listen(5000);
+console.log('chatserver on 5000');
+
 // extract styes and scripts from subpages
 app.use(sassmiddleware({
     src:'./static/scss',

@@ -5,11 +5,11 @@ const path=require('path');
 let transporter=nodemailer.createTransport({
     service:'gmail',
     host:'smtp.gmail.com',
-    port:587,
+    port:465,
     secure:false,
     auth:{
         user:'namanthecool786',
-        pass:'Nama'
+        pass:'Naman'
     }
 });
 
